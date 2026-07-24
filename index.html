@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архив ТКР · Рассекречено</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #c8c8c8;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            padding: 20px;
+            font-size: 15px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #0e0e0e;
+            padding: 30px 25px;
+            border: 1px solid #1c1c1c;
+            box-shadow: 0 0 50px rgba(100,0,0,0.05);
+        }
+        .stamp {
+            text-align: right;
+            font-size: 0.7em;
+            color: #4a4a4a;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #181818;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+        .stamp span {
+            color: #7a2a2a;
+            background: #130808;
+            padding: 2px 12px;
+            border: 1px solid #2a0a0a;
+            font-weight: bold;
+        }
+        .header {
+            text-align: center;
+            padding: 15px 0 10px;
+        }
+        .header h1 {
+            font-size: 2.6em;
+            font-weight: 300;
+            letter-spacing: 10px;
+            color: #e0e0e0;
+            text-shadow: 0 0 25px rgba(130,0,0,0.1);
+        }
+        .header h1 em { font-style: normal; color: #8c1c1c; }
+        .header .sub {
+            color: #4a4a4a;
+            font-size: 0.7em;
+            letter-spacing: 4px;
+            border-top: 1px solid #181818;
+            padding-top: 10px;
+            margin-top: 8px;
+        }
+        .warning-box {
+            background: #100808;
+            border-left: 3px solid #6b1a1a;
+            padding: 12px 18px;
+            margin: 25px 0;
+            font-size: 0.85em;
+            color: #9a9a9a;
+        }
+        .warning-box strong { color: #b34a4a; font-weight: 400; }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 25px 0 30px;
+            border-bottom: 1px solid #181818;
+            padding-bottom: 10px;
+        }
+        .tabs button {
+            background: #141414;
+            color: #b0b0b0;
+            border: 1px solid #252525;
+            padding: 8px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tabs button:hover { background: #1f0a0a; border-color: #6b1a1a; color: #e0e0e0; }
+        .tabs button.active { background: #1f0a0a; border-color: #6b1a1a; color: #e0e0e0; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .section { margin: 20px 0; }
+        .section h2 {
+            color: #b0b0b0;
+            font-weight: 300;
+            font-size: 1.5em;
+            letter-spacing: 4px;
+            border-bottom: 1px solid #181818;
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+        }
+        .section h3 {
+            color: #8a8a8a;
+            font-weight: 300;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+            margin: 20px 0 10px;
+            border-left: 2px solid #4a1a1a;
+            padding-left: 12px;
+        }
+        .section p { color: #a5a5a5; font-size: 0.95em; margin: 14px 0; }
+        .inset {
+            background: #111111;
+            padding: 16px 20px;
+            border-left: 2px solid #4a1a1a;
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #b5b5b5;
+        }
+        .inset strong { color: #b34a4a; font-weight: 400; }
+        .doc-list { list-style: none; padding: 0; }
+        .doc-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #161616;
+            font-size: 0.9em;
+            color: #9a9a9a;
+        }
+        .doc-list li::before { content: "▸ "; color: #4a1a1a; }
+        .dossier { display: flex; flex-wrap: wrap; gap: 25px; margin: 15px 0; }
+        .dossier .bio { flex: 1; min-width: 200px; }
+        .dossier .bio p { font-size: 0.9em; color: #b5b5b5; margin: 6px 0; }
+        .testimony {
+            background: #0d0d0d;
+            padding: 18px 20px;
+            border: 1px solid #1f1f1f;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .testimony .name { color: #b34a4a; font-weight: bold; font-size: 1.05em; }
+        .testimony .details { color: #999; font-size: 0.9em; margin-top: 8px; }
+        .testimony .details em { color: #6a6a6a; }
+        .doc-card {
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            border-left: 4px solid #6b1a1a;
+        }
+        .doc-card .doc-grif {
+            font-size: 0.75em;
+            color: #7a2a2a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .doc-card .doc-title { font-size: 1.1em; color: #c0c0c0; font-weight: bold; }
+        .doc-card .doc-meta { font-size: 0.8em; color: #6a6a6a; margin: 6px 0; }
+        .doc-card .doc-text {
+            color: #b5b5b5;
+            font-size: 0.95em;
+            margin: 12px 0;
+            padding-left: 10px;
+            border-left: 1px solid #2a2a2a;
+        }
+        .doc-card .doc-sign {
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #8a8a8a;
+            border-top: 1px solid #222;
+            padding-top: 10px;
+        }
+        .victim-entry {
+            background: #0d0d0d;
+            border-bottom: 1px solid #1f1f1f;
+            padding: 14px 16px;
+            margin: 6px 0;
+        }
+        .victim-entry .v-name { color: #b34a4a; font-weight: bold; font-size: 1.05em; }
+        .victim-entry .v-details {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .victim-entry .v-details em { color: #6a6a6a; }
+        .victim-entry .v-details strong { color: #b5b5b5; font-weight: normal; }
+        .qr-block {
+            background: #0e0e0e;
+            border: 1px dashed #2a1a1a;
+            text-align: center;
+            padding: 25px 20px;
+            margin: 35px 0;
+        }
+        .qr-placeholder {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            color: #3a3a3a;
+            line-height: 120px;
+            font-size: 0.7em;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .qr-block p { color: #6a6a6a; font-size: 0.8em; }
+        .contact-form {
+            background: #0c0c0c;
+            border: 1px solid #1a1a1a;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .contact-form textarea {
+            width: 100%;
+            background: #141414;
+            border: 1px solid #222;
+            color: #c0c0c0;
+            padding: 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .contact-form button {
+            background: #1a0a0a;
+            color: #b0b0b0;
+            border: 1px solid #2a1a1a;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 12px;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .contact-form button:hover { background: #2a0a0a; border-color: #4a1a1a; }
+        .contact-form button:disabled { opacity: 0.5; cursor: default; }
+        #sendStatus {
+            margin-top: 12px;
+            font-size: 0.85em;
+            text-align: center;
+            display: none;
+            color: #6a8a6a;
+        }
+        .footer {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid #161616;
+            text-align: center;
+            font-size: 0.7em;
+            color: #3a3a3a;
+            letter-spacing: 1px;
+        }
+        .footer .legal-note {
+            margin-top: 18px;
+            font-size: 0.65em;
+            color: #2a2a2a;
+            border-top: 1px solid #121212;
+            padding-top: 15px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; letter-spacing: 5px; }
+            .tabs button { padding: 6px 10px; font-size: 0.7em; }
+            .section h2 { font-size: 1.2em; }
+            .dossier { flex-direction: column; align-items: center; }
+            .footer .legal-note { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="stamp">
+        <span>СОВЕРШЕННО СЕКРЕТНО</span> • КОПИЯ
+    </div>
+
+    <div class="header">
+        <h1>АРХИВ <em>ТКР</em></h1>
+        <div class="sub">ТАЙНАЯ КРИМИНАЛЬНАЯ РЕВИЗИЯ • ИЗЪЯТО</div>
+    </div>
+
+    <div class="warning-box">
+        <strong>Доступ ограничен.</strong> Материалы восстановлены из повреждённых секторов серверов СТС.
+        Часть информации может быть неполной. Мы не гарантируем целостность файлов.
+    </div>
+
+    <div class="tabs">
+        <button class="active" data-tab="tab1">Досье</button>
+        <button data-tab="tab2">Свидетели</button>
+        <button data-tab="tab3">Документы</button>
+        <button data-tab="tab4">Список 43</button>
+        <button data-tab="tab5">Уничтожение улик</button>
+        <button data-tab="tab6">Власть Мясникова</button>
+        <button data-tab="tab7">Связь</button>
+    </div>
+
+    <!-- ========= ВКЛАДКА 1: ДОСЬЕ (расширенное) ========= -->
+    <div id="tab1" class="tab-content active">
+        <div class="section">
+            <h2>Досье: Вячеслав Мясников</h2>
+            <div class="dossier">
+                <div class="bio">
+                    <p><strong style="color:#b34a4a;">Полное имя:</strong> Вячеслав Владимирович Мясников</p>
+                    <p><strong style="color:#b34a4a;">Дата рождения:</strong> 2 декабря 1979 (46 лет)</p>
+                    <p><strong style="color:#b34a4a;">Место рождения:</strong> пос. Луговой, Тюменская область</p>
+                    <p><strong style="color:#b34a4a;">Образование:</strong> Уральский лесотехнический университет, инженер-механик</p>
+                    <p><strong style="color:#b34a4a;">Карьера:</strong> «Уральские пельмени» с 2000, СТС с 2009.</p>
+                    <p><strong style="color:#b34a4a;">Семья:</strong> Женат, трое детей.</p>
+                    <p><strong style="color:#b34a4a;">Известный образ:</strong> «мальчик-маньяк» — зрители смеялись, не зная правды.</p>
+                    <div style="margin-top:15px; border-top:1px solid #1a1a1a; padding-top:15px;">
+                        <p style="font-size:0.9em; color:#b5b5b5;">
+                            <strong style="color:#b34a4a;">По данным ТКР:</strong> Мясников — теневая фигура, контролирующая канал через компромат и финансовые рычаги.
+                            Он лично отдавал приказы об уничтожении улик. Все, кто пытался противостоять, исчезали.
+                            Зрители в зале были заложниками — их били током, если они не смеялись над его «шутками».
+                            Есть доказательства прямых контактов с администрацией президента РФ (возможно, недостоверная информация).
+                            Мясников не просто актёр — он структура, власть, сам СТС.
+                        </p>
+                        <p style="font-size:0.9em; color:#b5b5b5; margin-top:10px;">
+                            <strong style="color:#b34a4a;">Психологический портрет:</strong> Нарциссическое расстройство, садистские наклонности, параноидальная убеждённость в безнаказанности. Коллекционирует личные вещи жертв. Хранит их в сейфе в доме в Сочи.
+                        </p>
+                        <p style="font-size:0.9em; color:#b5b5b5; margin-top:10px;">
+                            <strong style="color:#b34a4a;">Становление тирании:</strong> С 2012 года собирал компромат на руководство. К 2015 году имел досье на каждого топ-менеджера. В 2016 году впервые пригрозил директору Звягинцеву публикацией материалов о финансовых махинациях. К 2018 году стал теневым хозяином канала через подставные фирмы и кредиты.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 2: СВИДЕТЕЛИ (расширенная) ========= -->
+    <div id="tab2" class="tab-content">
+        <div class="section">
+            <h2>Свидетели — те, кто пытался заговорить</h2>
+            <p>Эти люди видели правду. Все они исчезли или были убиты.</p>
+            <div class="testimony">
+                <div class="name">Алексей Степанов, звукорежиссёр</div>
+                <div class="details"><p><em>Документ:</em> заявление в полицию (не зарегистрировано).</p><p><em>Суть:</em> Слышал крики из гримёрки Мясникова, записал аудио. Через неделю найден мёртвым в машине.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Екатерина Воробьёва, администратор</div>
+                <div class="details"><p><em>Документ:</em> служебная записка СТС.</p><p><em>Суть:</em> Докладывала о следах крови в гримёрке. Уволена, затем исчезла.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Дмитрий Кузнецов, водитель</div>
+                <div class="details"><p><em>Документ:</em> показания ТКР.</p><p><em>Суть:</em> Возил Мясникова в промзону с мешками. После упоминания — авария, затем пропал.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Светлана Морозова, уборщица</div>
+                <div class="details"><p><em>Документ:</em> письмо в прокуратуру (перехвачено).</p><p><em>Суть:</em> Видела окровавленные вещи. Найдена мёртвой — «сердечный приступ».</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Владимир Ткачук, охранник</div>
+                <div class="details"><p><em>Документ:</em> видеозапись (изъята).</p><p><em>Суть:</em> Заснял вывоз чемодана ночью. Уволен, через неделю исчез.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Иванов П.А., зритель (38 лет)</div>
+                <div class="details"><p><em>Документ:</em> показания от 14.06.2021 (документ №2).</p><p><em>Суть:</em> Били током в кресле, угрожали семьёй. После попытки обратиться в СК — найден в психбольнице.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Сидорова М.И., зрительница (45 лет)</div>
+                <div class="details"><p><em>Документ:</em> заявление в полицию (сгорело при пожаре).</p><p><em>Суть:</em> Пыталась выйти из зала, задержана, избита. Дом сгорел, исчезла.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Григорьев Н.В., зритель (29 лет)</div>
+                <div class="details"><p><em>Документ:</em> видео (удалено через 10 минут).</p><p><em>Суть:</em> Снял на телефон убийство за кулисами. Сбит машиной, потерял память, семья эмигрировала.</p></div>
+            </div>
+            <div class="testimony">
+                <div class="name">Петрова А.С., зрительница (52 года)</div>
+                <div class="details"><p><em>Документ:</em> заявление «потеряно».</p><p><em>Суть:</em> Попыталась вызвать полицию, избита, позже найдена мёртвой в ванне.</p></div>
+            </div>
+            <p style="margin-top:20px; color:#6a6a6a; font-size:0.85em;">Всего восстановлено 12 показаний (из них 4 — от зрителей). Полный архив — на закрытых серверах ТКР.</p>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 3: ДОКУМЕНТЫ (без изменений) ========= -->
+    <div id="tab3" class="tab-content">
+        <div class="section">
+            <h2>Изъятые документы</h2>
+            <!-- Документ №1 -->
+            <div class="doc-card">
+                <div class="doc-grif">Для служебного пользования</div>
+                <div class="doc-title">Внутренняя служебная записка</div>
+                <div class="doc-meta">Дата: 12.03.2018 | От: Финансового директора | Кому: Генеральному директору</div>
+                <div class="doc-text"><strong>Тема:</strong> Финансовые обязательства перед ООО «Урал-Инвест»<br><br>«По состоянию на 01.03.2018 общий объём заёмных средств, привлечённых через ООО «Урал-Инвест» в период 2015–2018 годов, составляет 347 млн рублей. Часть обязательств остаётся непогашенной.<br><br>В связи с особенностями оформления отдельных договоров существует риск возникновения претензий со стороны контрагентов и контролирующих органов. Судебное оспаривание данных соглашений может повлечь существенные финансовые последствия для компании.<br><br>Рекомендую воздержаться от действий, способных привести к эскалации конфликта до завершения внутренней проверки.»</div>
+                <div class="doc-sign"><strong>Подписи:</strong><br>— Соболев Игорь Алексеевич (финансовый директор)<br>— Резолюция: «К сведению. Без публичных действий.» — Звягинцев А.В. (15.03.2018)</div>
+            </div>
+            <!-- Документ №2 -->
+            <div class="doc-card">
+                <div class="doc-grif">Секретно. Не подлежит разглашению.</div>
+                <div class="doc-title">Фрагмент объяснения свидетеля</div>
+                <div class="doc-meta">Дата: 14.06.2021 | Материалы проверки № 143/21 | Свидетель: Иванов П.А., 38 лет</div>
+                <div class="doc-text">«12.05.2019 я присутствовал на съёмках телевизионного шоу в качестве зрителя. Во время перерыва заметил конфликт между одним из участников съёмочной группы и неизвестной мне девушкой за кулисами.<br><br>После окончания съёмок ко мне подошли сотрудники охраны и настоятельно рекомендовали не обсуждать увиденное с третьими лицами. Разговор сопровождался намёками на возможные неприятности в случае распространения информации.<br><br>Опасаясь последствий, я не обращался в правоохранительные органы и ранее никому об этом не сообщал.»</div>
+                <div class="doc-sign"><strong>Подпись свидетеля:</strong> ________ (Иванов П.А.)<br><strong>Принял:</strong> капитан юстиции Смирнов А.В. (подпись)</div>
+            </div>
+            <!-- Документ №3 -->
+            <div class="doc-card">
+                <div class="doc-grif">Совершенно секретно. Копия.</div>
+                <div class="doc-title">Расшифровка телефонного разговора</div>
+                <div class="doc-meta">Дата: 22.08.2022 | Время: 19:43 | Канал: защищённая линия (запись ТКР)</div>
+                <div class="doc-text"><strong>Мясников:</strong> «Тот вопрос, что я поднимал, — он решается?»<br><strong>Голос (мужской):</strong> «Да, тебя не тронут. Дело закроют на уровне СК. Судьи получили указания. Главное — не выноси сор из избы.»<br><strong>Мясников:</strong> «А если кто-то из своих начнёт говорить?»<br><strong>Голос:</strong> «Таких уберут. Мы это делаем быстро. Ты своё дело делай, мы своё.»<br><strong>Мясников:</strong> «Договорились.»</div>
+                <div class="doc-sign"><strong>Примечание ТКР:</strong> Голос идентифицирован как сотрудник администрации президента РФ (возможно, недостоверная информация).</div>
+            </div>
+            <!-- Документ №4 -->
+            <div class="doc-card">
+                <div class="doc-grif">Копия. Для архива.</div>
+                <div class="doc-title">Постановление о прекращении уголовного дела № 98/19</div>
+                <div class="doc-meta">Дата: 14.11.2019 | Судья: Петров И.В., Екатеринбургский городской суд</div>
+                <div class="doc-text">«В удовлетворении ходатайства потерпевшей стороны об истребовании видеозаписей с камер СТС отказать. Ввиду «недостаточности улик» производство по делу об исчезновении Мельникова Д.С. прекратить. Копию определения направить в архив.»</div>
+                <div class="doc-sign"><strong>Примечание ТКР:</strong> на том же заседании судья Петров перевёл своей жене 2,3 млн рублей на счёт в швейцарском банке — отслежено через финансовые потоки.</div>
+            </div>
+            <!-- Документ №5 -->
+            <div class="doc-card">
+                <div class="doc-grif">Для служебного пользования</div>
+                <div class="doc-title">Внутренний приказ № 78/Р-доп</div>
+                <div class="doc-meta">Дата: 18.09.2025 | О дополнительных мерах информационной безопасности</div>
+                <div class="doc-text">«В связи с риском утечки внутренней информации предписывается:<br>- Провести аудит архивных видеоматериалов за период 2015–2025 годов.<br>- Изъять из общего доступа документы, содержащие конфиденциальную информацию.<br>- Организовать повторное подписание соглашений о неразглашении для сотрудников, имеющих доступ к внутренним материалам.<br>- Усилить контроль за соблюдением режима коммерческой тайны.<br><br>Ответственными за исполнение назначить руководителей соответствующих подразделений.»</div>
+                <div class="doc-sign"><strong>Подписи:</strong><br>— Звягинцев Аркадий Викторович (генеральный директор)<br>— Ким Лариса Сергеевна (программный директор)<br>— Сидоров Валентин Петрович (главный юрист)</div>
+            </div>
+            <!-- Документ №6 -->
+            <div class="doc-card">
+                <div class="doc-grif">СОВЕРШЕННО СЕКРЕТНО. КОПИЯ.</div>
+                <div class="doc-title">Внутренняя справка по эпизодам №1–3</div>
+                <div class="doc-meta">Дата: 15.07.2020 | Отдел: Служба безопасности СТС | Ответственный: Сидоров В.П.</div>
+                <div class="doc-text">«В ходе внутреннего аудита выявлены три эпизода, требующие сокрытия:<br><br><strong>Эпизод №1 (Кравцова Е.А.)</strong> – 14.03.2015. Тело обнаружено 12.05.2015. ДНК Мясникова на месте. Рекомендуется не передавать материалы в СК.<br><br><strong>Эпизод №2 (Мельников Д.С.)</strong> – 22.08.2016. Смерть квалифицирована как несчастный случай, однако экспертиза указывает на удар тупым предметом до падения. Предписано уничтожить заключение эксперта.<br><br><strong>Эпизод №3 (Григорьева О.В.)</strong> – 09.12.2017. Признаки удушения и инъекции. Свидетель (водитель мусоровоза) описал фургон Мясникова. Свидетелю предложено молчать за 500 тыс. рублей.<br><br><strong>Рекомендация:</strong> все материалы по трём эпизодам признать «не подлежащими рассмотрению». Пресс-релиз – «исчезновения не связаны с деятельностью канала».»</div>
+                <div class="doc-sign"><strong>Подпись:</strong> Сидоров В.П. (главный юрист)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 4: СПИСОК 43 ========= -->
+    <div id="tab4" class="tab-content">
+        <div class="section">
+            <h2>Список 43 подтверждённых эпизодов</h2>
+            <p>Ниже приведены все имена с полными данными: возраст, место жительства, профессия, семейное положение, обстоятельства исчезновения/смерти и судьба близких. Зрители отмечены отдельно.</p>
+
+            <!-- 1 -->
+            <div class="victim-entry">
+                <div class="v-name">1. Кравцова Екатерина Андреевна (1987, 29 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Ленина 12, кв. 5. <strong>Профессия:</strong> визажист СТС. <strong>Семья:</strong> мать — Кравцова Е.П., отец — Кравцов А.В. (в психушке). <strong>Обстоятельства:</strong> Задушена кабелем в гараже, тело вывезено в лесополосу. <strong>Судьба близких:</strong> мать убита через год, отец сошёл с ума.</div>
+            </div>
+            <!-- 2 -->
+            <div class="victim-entry">
+                <div class="v-name">2. Мельников Денис Сергеевич (1991, 25 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, пр. Космонавтов 34. <strong>Профессия:</strong> звукорежиссёр-стажёр СТС. <strong>Семья:</strong> жена — Мельникова Е.А., дети — Максим и Даниил (в детдоме). <strong>Обстоятельства:</strong> Сброшен с обрыва после удара монтировкой. <strong>Судьба близких:</strong> жена исчезла через месяц, дети в детдоме.</div>
+            </div>
+            <!-- 3 -->
+            <div class="victim-entry">
+                <div class="v-name">3. Григорьева Ольга Владимировна (1983, 34 года)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Малышева 45. <strong>Профессия:</strong> администратор съёмочной группы. <strong>Семья:</strong> сестра — Григорьева Т.В., родители — в эмиграции. <strong>Обстоятельства:</strong> Инъекция кетамина+фентанила, расчленена, вывезена на свалку. <strong>Судьба близких:</strong> сестра убита, родители эмигрировали.</div>
+            </div>
+            <!-- 4 -->
+            <div class="victim-entry">
+                <div class="v-name">4. Соболев Павел Игоревич (1985, 33 года)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Восточная 18. <strong>Профессия:</strong> администратор площадки. <strong>Семья:</strong> жена — Соболева И.С., дочь — Анна (в интернате). <strong>Обстоятельства:</strong> Исчез после требования оплаты, машина сгорела. <strong>Судьба близких:</strong> жена под угрозой, дочь в интернате.</div>
+            </div>
+            <!-- 5 -->
+            <div class="victim-entry">
+                <div class="v-name">5. Кузьмина Ирина Дмитриевна (1990, 26 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. 8 Марта 7. <strong>Профессия:</strong> костюмер. <strong>Семья:</strong> муж — Кузьмин А.Н., дети — у родственников. <strong>Обстоятельства:</strong> Заметила пятна крови, пропала по пути домой. <strong>Судьба близких:</strong> муж убит, дети у родственников.</div>
+            </div>
+            <!-- 6 -->
+            <div class="victim-entry">
+                <div class="v-name">6. Горбунов Евгений Александрович (1982, 36 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Челюскинцев 9. <strong>Профессия:</strong> водитель служебного автобуса. <strong>Семья:</strong> мать — Горбунова Н.С. (покончила с собой). <strong>Обстоятельства:</strong> Отказался подвозить Мясникова, найден мёртвым с отравлением. <strong>Судьба близких:</strong> мать покончила с собой.</div>
+            </div>
+            <!-- 7 -->
+            <div class="victim-entry">
+                <div class="v-name">7. Федотова Наталья Сергеевна (1993, 27 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Белинского 28. <strong>Профессия:</strong> гримёр. <strong>Семья:</strong> брат — Федотов Д.С., родители — под наблюдением. <strong>Обстоятельства:</strong> Записала угрозы Мясникова, исчезла через 3 дня. <strong>Судьба близких:</strong> брат убит, родители под наблюдением.</div>
+            </div>
+            <!-- 8 -->
+            <div class="victim-entry">
+                <div class="v-name">8. Тимофеев Роман Викторович (1986, 32 года)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Куйбышева 50. <strong>Профессия:</strong> охранник СТС. <strong>Семья:</strong> жена — Тимофеева Т.Н., двое детей — исчезли. <strong>Обстоятельства:</strong> Видел вынос мешков, подал заявление, пропал через неделю. <strong>Судьба близких:</strong> жена и дети исчезли.</div>
+            </div>
+            <!-- 9 -->
+            <div class="victim-entry">
+                <div class="v-name">9. Морозова Анжелика Павловна (1989, 31 год)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Фрунзе 12. <strong>Профессия:</strong> ассистент по реквизиту. <strong>Семья:</strong> сестра — Морозова Л.П., родители — в неизвестности. <strong>Обстоятельства:</strong> Нашла поддельные документы, исчезла. <strong>Судьба близких:</strong> сестра убита, родители пропали.</div>
+            </div>
+            <!-- 10 -->
+            <div class="victim-entry">
+                <div class="v-name">10. Ковалёв Сергей Николаевич (1977, 41 год)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Лермонтова 8. <strong>Профессия:</strong> монтажёр. <strong>Семья:</strong> жена — Ковалёва И.В., сын — Ковалёв А.С. (убиты). <strong>Обстоятельства:</strong> Отказался скрывать материалы, пропал вместе с компьютером. <strong>Судьба близких:</strong> жена и сын убиты.</div>
+            </div>
+            <!-- 11 -->
+            <div class="victim-entry">
+                <div class="v-name">11. Орлова Елена Юрьевна (1984, 35 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Шарташская 13. <strong>Профессия:</strong> психолог СТС. <strong>Семья:</strong> муж — Орлов А.В., дети — в приюте. <strong>Обстоятельства:</strong> Узнала о поведении Мясникова, исчезла. <strong>Судьба близких:</strong> муж убит, дети в приюте.</div>
+            </div>
+            <!-- 12 -->
+            <div class="victim-entry">
+                <div class="v-name">12. Борисов Алексей Фёдорович (1980, 38 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Свердлова 6. <strong>Профессия:</strong> осветитель. <strong>Семья:</strong> родители — убиты, сестра — пропала. <strong>Обстоятельства:</strong> Снял Мясникова на телефон, телефон разбит, сам исчез. <strong>Судьба близких:</strong> родители убиты, сестра пропала.</div>
+            </div>
+            <!-- 13 -->
+            <div class="victim-entry">
+                <div class="v-name">13. Герасимова Мария Ивановна (1988, 30 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Академическая 4. <strong>Профессия:</strong> продюсер. <strong>Семья:</strong> муж — Герасимов Д.А., двое детей — убиты. <strong>Обстоятельства:</strong> Отказалась подписывать фиктивные договоры, исчезла после жалобы в СК. <strong>Судьба близких:</strong> муж и дети убиты.</div>
+            </div>
+            <!-- 14 -->
+            <div class="victim-entry">
+                <div class="v-name">14. Зайцев Дмитрий Олегович (1992, 26 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Волгоградская 45. <strong>Профессия:</strong> звукоинженер. <strong>Семья:</strong> девушка — Зайцева М.Н., родители — под угрозой. <strong>Обстоятельства:</strong> Был на закрытой вечеринке, избит, затем пропал. <strong>Судьба близких:</strong> девушка убита, родители под угрозой.</div>
+            </div>
+            <!-- 15 -->
+            <div class="victim-entry">
+                <div class="v-name">15. Соловьёва Анастасия Романовна (1995, 25 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Уральская 10. <strong>Профессия:</strong> секретарь. <strong>Семья:</strong> мать — убита, отец — в коме. <strong>Обстоятельства:</strong> Заметила странные даты, уволена и пропала. <strong>Судьба близких:</strong> мать убита, отец в коме.</div>
+            </div>
+            <!-- 16 -->
+            <div class="victim-entry">
+                <div class="v-name">16. Петров Валентин Георгиевич (1976, 43 года)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Тракторная 34. <strong>Профессия:</strong> директор по логистике. <strong>Семья:</strong> жена и дети — убиты. <strong>Обстоятельства:</strong> Обнаружил тайные грузы, исчез, машина пуста. <strong>Судьба близких:</strong> жена и дети убиты.</div>
+            </div>
+            <!-- 17 -->
+            <div class="victim-entry">
+                <div class="v-name">17. Михайлова Оксана Владимировна (1983, 37 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Коммунистическая 22. <strong>Профессия:</strong> бухгалтер. <strong>Семья:</strong> муж — Михайлов И.Н., дети — в детдоме. <strong>Обстоятельства:</strong> Выявила списания на счета Мясникова, исчезла перед подачей отчёта. <strong>Судьба близких:</strong> муж убит, дети в детдоме.</div>
+            </div>
+            <!-- 18 -->
+            <div class="victim-entry">
+                <div class="v-name">18. Егоров Антон Сергеевич (1990, 30 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Победы 18. <strong>Профессия:</strong> курьер. <strong>Семья:</strong> сестра — Егорова Н.С., родители — эмигрировали. <strong>Обстоятельства:</strong> Доставлял конверты без адреса, попал в реанимацию, затем пропал. <strong>Судьба близких:</strong> сестра убита, родители эмигрировали.</div>
+            </div>
+            <!-- 19 -->
+            <div class="victim-entry">
+                <div class="v-name">19. Козлова Татьяна Николаевна (1987, 31 год)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Гагарина 9. <strong>Профессия:</strong> дизайнер. <strong>Семья:</strong> муж и сын — убиты. <strong>Обстоятельства:</strong> Случайно загрузила файл со списками, испугалась, исчезла. <strong>Судьба близких:</strong> муж и сын убиты.</div>
+            </div>
+            <!-- 20 -->
+            <div class="victim-entry">
+                <div class="v-name">20. Николаев Игорь Викторович (1979, 39 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Бажова 31. <strong>Профессия:</strong> оператор. <strong>Семья:</strong> жена — убита, дети — в интернате. <strong>Обстоятельства:</strong> Заметил несуществующие адреса, отстранён и пропал. <strong>Судьба близких:</strong> жена убита, дети в интернате.</div>
+            </div>
+            <!-- 21 -->
+            <div class="victim-entry">
+                <div class="v-name">21. Павлова Валерия Алексеевна (1994, 26 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Менделеева 5. <strong>Профессия:</strong> интервьюер. <strong>Семья:</strong> мать — убита, отец — в психушке. <strong>Обстоятельства:</strong> Взяла интервью с оговоркой, сохранила копию, впала в амнезию, затем исчезла. <strong>Судьба близких:</strong> мать убита, отец в психушке.</div>
+            </div>
+            <!-- 22 -->
+            <div class="victim-entry">
+                <div class="v-name">22. Степанов Виталий Михайлович (1981, 37 лет)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Флотская 14. <strong>Профессия:</strong> администратор студии. <strong>Семья:</strong> жена и двое детей — убиты. <strong>Обстоятельства:</strong> Проверял списки приглашённых, уволен, машина найдена в кювете. <strong>Судьба близких:</strong> жена и дети убиты.</div>
+            </div>
+            <!-- 23 -->
+            <div class="victim-entry">
+                <div class="v-name">23. Денисова Екатерина Борисовна (1986, 33 года)</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Бебеля 56. <strong>Профессия:</strong> редактор. <strong>Семья:</strong> муж — убит, дети — в детдоме. <strong>Обстоятельства:</strong> Отредактировала интервью с оговоркой, начала собирать досье, не вышла на работу. <strong>Судьба близких:</strong> муж убит, дети в детдоме.</div>
+            </div>
+            <!-- 24 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">24. Тарасов Владимир Сергеевич (1975, 40 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Загородная 8. <strong>Профессия:</strong> грибник. <strong>Семья:</strong> жена и сын — убиты. <strong>Обстоятельства:</strong> Видел Мясникова у места захоронения, позвонил в полицию, через месяц исчез. <strong>Судьба близких:</strong> жена и сын убиты.</div>
+            </div>
+            <!-- 25 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">25. Ситникова Галина Петровна (1968, 47 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Дачная 16. <strong>Профессия:</strong> дачница. <strong>Семья:</strong> дочь — убита, внуки — пропали. <strong>Обстоятельства:</strong> Запомнила номер фургона, найдена мёртвой — «сердечный приступ». <strong>Судьба близких:</strong> дочь убита, внуки пропали.</div>
+            </div>
+            <!-- 26 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">26. Куликов Фёдор Александрович (1992, 24 года) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Озёрная 3. <strong>Профессия:</strong> рыбак. <strong>Семья:</strong> мать и сестра — убиты. <strong>Обстоятельства:</strong> Нашёл сумку с документами, отнёс в полицию, сбит машиной, умер в коме. <strong>Судьба близких:</strong> мать и сестра убиты.</div>
+            </div>
+            <!-- 27 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">27. Беляева Ольга Игоревна (1973, 42 года) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Луговая 2. <strong>Профессия:</strong> продавщица. <strong>Семья:</strong> муж и дети — убиты. <strong>Обстоятельства:</strong> Помнила, как Мясников покупал лопату, дала показания, магазин сгорел, исчезла. <strong>Судьба близких:</strong> муж и дети убиты.</div>
+            </div>
+            <!-- 28 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">28. Громов Максим Андреевич (1989, 27 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Транспортная 15. <strong>Профессия:</strong> таксист. <strong>Семья:</strong> жена и ребёнок — убиты. <strong>Обстоятельства:</strong> Вёз Мясникова к стройке, найден мёртвым с отравой. <strong>Судьба близких:</strong> жена и ребёнок убиты.</div>
+            </div>
+            <!-- 29 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">29. Фомина Светлана Николаевна (1982, 34 года) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Кирова 12. <strong>Профессия:</strong> медсестра. <strong>Семья:</strong> муж — убит, дети — пропали. <strong>Обстоятельства:</strong> Видела Мясникова с раной, дала показания, впала в кому, исчезла из больницы. <strong>Судьба близких:</strong> муж убит, дети пропали.</div>
+            </div>
+            <!-- 30 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">30. Широков Артём Русланович (1995, 21 год) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Студенческая 4. <strong>Профессия:</strong> студент. <strong>Семья:</strong> родители — убиты, сестра — в розыске. <strong>Обстоятельства:</strong> Снял Мясникова у реки с пакетом, видео удалено, пропал. <strong>Судьба близких:</strong> родители убиты, сестра в розыске.</div>
+            </div>
+            <!-- 31 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">31. Андреева Юлия Сергеевна (1980, 36 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Почтовская 7. <strong>Профессия:</strong> сотрудница почты. <strong>Семья:</strong> муж и дочь — убиты. <strong>Обстоятельства:</strong> Принимала посылки на несуществующие адреса, пропала, найдена в психбольнице, затем исчезла. <strong>Судьба близких:</strong> муж и дочь убиты.</div>
+            </div>
+            <!-- 32 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">32. Новиков Константин Дмитриевич (1978, 38 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Вокзальная 1. <strong>Профессия:</strong> инвестор. <strong>Семья:</strong> жена и дети — убиты. <strong>Обстоятельства:</strong> Вкладывал деньги в проекты Мясникова, потребовал отчёт, найден мёртвым в машине (авария). <strong>Судьба близких:</strong> жена и дети убиты.</div>
+            </div>
+            <!-- 33 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">33. Максимова Инна Алексеевна (1985, 31 год) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Комсомольская 23. <strong>Профессия:</strong> нотариус. <strong>Семья:</strong> мать — убита, сестра — в бегах. <strong>Обстоятельства:</strong> Удостоверяла договоры с фиктивными фирмами, ограблена, пропала через день. <strong>Судьба близких:</strong> мать убита, сестра в бегах.</div>
+            </div>
+            <!-- 34 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">34. Ткачук Григорий Ильич (1970, 45 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Заводская 30. <strong>Профессия:</strong> оценщик. <strong>Семья:</strong> жена и сын — убиты. <strong>Обстоятельства:</strong> Подал иск, дом сгорел, выехал по поддельным документам — вывезен против воли. <strong>Судьба близких:</strong> жена и сын убиты.</div>
+            </div>
+            <!-- 35 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">35. Савельева Вера Эдуардовна (1983, 33 года) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Техническая 7. <strong>Профессия:</strong> менеджер по персоналу. <strong>Семья:</strong> муж и ребёнок — убиты. <strong>Обстоятельства:</strong> Оформляла фиктивных сотрудников, созналась, исчезла, вещи найдены у озера. <strong>Судьба близких:</strong> муж и ребёнок убиты.</div>
+            </div>
+            <!-- 36 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">36. Данилов Яков Петрович (1969, 46 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Промышленная 19. <strong>Профессия:</strong> владелец склада. <strong>Семья:</strong> жена и дети — убиты. <strong>Обстоятельства:</strong> Сообщил в полицию, избит, пропал. <strong>Судьба близких:</strong> жена и дети убиты.</div>
+            </div>
+            <!-- 37 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">37. Попова Антонина Михайловна (1965, 50 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Садовая 13. <strong>Профессия:</strong> пенсионерка (тётя Мясникова). <strong>Семья:</strong> муж — убит, дети — пропали. <strong>Обстоятельства:</strong> Узнала о его тайной жизни, попыталась повлиять, перестала отвечать, квартира продана по поддельной доверенности. <strong>Судьба близких:</strong> муж убит, дети пропали.</div>
+            </div>
+            <!-- 38 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">38. Смирнов Олег Игоревич (1975, 40 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Лесная 22. <strong>Профессия:</strong> частный предприниматель (друг детства). <strong>Семья:</strong> жена и дети — убиты. <strong>Обстоятельства:</strong> Собирал компромат, попал в аварию, госпитализирован, переведён в закрытое учреждение. <strong>Судьба близких:</strong> жена и дети убиты.</div>
+            </div>
+            <!-- 39 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">39. Власова Надежда Петровна (1972, 43 года) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Сосновая 5. <strong>Профессия:</strong> соседка по даче. <strong>Семья:</strong> муж и двое детей — убиты. <strong>Обстоятельства:</strong> Видела мешки, слышала крики, подала заявление, исчезла. <strong>Судьба близких:</strong> муж и дети убиты.</div>
+            </div>
+            <!-- 40 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">40. Брагин Евгений Семёнович (1960, 55 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Университетская 11. <strong>Профессия:</strong> преподаватель (наставник в институте). <strong>Семья:</strong> жена и дочь — убиты. <strong>Обстоятельства:</strong> Посоветовал явиться с повинной, найден с пробитой головой, дело закрыто. <strong>Судьба близких:</strong> жена и дочь убиты.</div>
+            </div>
+            <!-- 41 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">41. Гусева Лариса Николаевна (1955, 60 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Первомайская 9. <strong>Профессия:</strong> мать одной из жертв. <strong>Семья:</strong> остальные родственники — убиты. <strong>Обстоятельства:</strong> Провела частное расследование, найдена мёртвой – «сердечный приступ», но ТКР указывает на инъекцию. <strong>Судьба близких:</strong> все убиты.</div>
+            </div>
+            <!-- 42 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">42. Сорокина Елена Викторовна (1987, 30 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Рабочая 14. <strong>Профессия:</strong> бухгалтер СТС. <strong>Семья:</strong> муж — убит, дети — в приюте. <strong>Обстоятельства:</strong> Выявила финансовые махинации Мясникова, исчезла, тело не найдено. <strong>Судьба близких:</strong> муж убит, дети в приюте.</div>
+            </div>
+            <!-- 43 (зритель) -->
+            <div class="victim-entry">
+                <div class="v-name">43. Козлов Артём Николаевич (1994, 26 лет) — зритель</div>
+                <div class="v-details"><strong>Город:</strong> Екатеринбург, ул. Программистов 6. <strong>Профессия:</strong> системный администратор. <strong>Семья:</strong> семья эмигрировала, следы потеряны. <strong>Обстоятельства:</strong> Скопировал часть удалённых файлов, но был перехвачен, убит. <strong>Судьба близких:</strong> семья эмигрировала, связь потеряна.</div>
+            </div>
+
+            <div class="inset" style="margin-top:30px;">
+                <strong>По неполным данным, реальное число жертв может превышать 1000.</strong> Остальные эпизоды не зафиксированы из-за уничтожения архивов и давления на свидетелей.
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 5: УНИЧТОЖЕНИЕ УЛИК (расширенная) ========= -->
+    <div id="tab5" class="tab-content">
+        <div class="section">
+            <h2>Уничтожение улик</h2>
+            <h3>2015–2018 — первые удаления</h3>
+            <p>Сразу после первого исчезновения (Кравцова, 2015) руководство СТС отдало негласный приказ удалять все записи с камер наблюдения, где фигурирует Мясников. К 2018 году данные за 2015–2017 были стёрты. Уничтожение проводилось силами технического отдела под руководством Сидорова. Каждый месяц составлялся акт о списании жёстких дисков. Всего за этот период было уничтожено 37 серверных накопителей.</p>
+            <h3>2019–2021 — массовая чистка</h3>
+            <p>Запущена программа «Архивная оптимизация». Удалялись все файлы старше 3 лет. Под удаление попали все эпизоды с участием Мясникова за 2009–2019 годы. Диски с записями вывозили и дробили на гидравлическом прессе в промзоне. По показаниям техника (документ №1-доп), за 2020 год было вывезено более 200 кг металлолома от дисков. В 2021 году Сидоров лично курировал сожжение бумажных архивов в котельной №2 СТС.</p>
+            <h3>2022–2024 — цифровое замещение</h3>
+            <p>Цифровое замещение — записи перезаписывали поверх старых файлов. К 2024 году оригиналов 2009–2015 годов осталось менее 5 %. Были привлечены сторонние IT-компании, которые гарантировали полную невосстановимость. Однако одна из компаний оставила резервную копию на своих серверах — именно её ТКР обнаружил в 2026 году.</p>
+            <h3>2025 — приказ № 78/Р</h3>
+            <p>18 сентября 2025 подписан приказ о полном уничтожении всех материалов. ТКР получил доступ 12 сентября и скопировал часть файлов. Однако большая часть была уничтожена. Восстановлено лишь 12 % данных — в основном текстовые документы и фрагменты видео с камер общего плана. Записи из гримёрок и коридоров утеряны навсегда.</p>
+            <div class="inset"><strong>Итог:</strong> восстановлено лишь <strong>12 %</strong> данных.</div>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 6: ВЛАСТЬ МЯСНИКОВА (расширенная) ========= -->
+    <div id="tab6" class="tab-content">
+        <div class="section">
+            <h2>Как Мясников стал хозяином СТС</h2>
+            <p>Мясников начал захват канала в 2015 году. Он использовал три рычага:</p>
+            <div style="background:#111; padding:15px; border-left:2px solid #4a1a1a; margin:15px 0;">
+                <p><strong style="color:#b34a4a;">Финансовая петля:</strong> через подставное ООО «Урал-Инвест» он выдал каналу займы на общую сумму 347 млн рублей (документ №1). К 2018 году он стал главным кредитором СТС. Любая попытка его уволить или ограничить приводила к угрозе банкротства.</p>
+                <p><strong style="color:#b34a4a;">Компромат:</strong> он собирал досье на каждого топ-менеджера — финансовые махинации, серые схемы, личные тайны, измены, уголовные дела. К 2017 году он имел папки на 12 руководителей разного уровня. Когда его хотели уволить, он предъявлял папку, и все вопросы отпадали. В 2020 году он шантажировал Звягинцева, угрожая обнародовать его связи с офшорами.</p>
+                <p><strong style="color:#b34a4a;">Страх:</strong> он лично уничтожал несогласных. Каждый случай становился уроком для остальных. Он запугивал не только сотрудников, но и их семьи. Например, в 2019 году он пригласил начальника охраны СТС на «разговор», после чего тот исчез, а его семья была найдена мёртвой в собственном доме. СТС предпочёл молчать, чтобы сохранить свои жизни и прибыль.</p>
+            </div>
+            <p>К 2020 году Мясников стал единоличным хозяином. Он отдавал приказы директорам, назначал своих людей, контролировал бюджеты. СТС превратился в его личную крепость, где каждый сотрудник боялся даже вздохнуть без его разрешения. Его семья (жена, трое детей) живёт под круглосуточной охраной, их маршруты засекречены — это говорит о том, что он боится возмездия.</p>
+            <div class="inset"><strong>Он — структура, власть, сам СТС.</strong></div>
+            <ul class="doc-list">
+                <li><strong>Угрозы:</strong> лично угрожал директору Звягинцеву.</li>
+                <li><strong>Связи с администрацией президента:</strong> (возможно, недостоверная информация) — в документах ТКР фигурируют расшифровки разговоров, но подлинность не подтверждена.</li>
+                <li><strong>Семья под охраной:</strong> жена и дети живут под круглосуточной охраной.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========= ВКЛАДКА 7: СВЯЗЬ ========= -->
+    <div id="tab7" class="tab-content">
+        <div class="section">
+            <h2>Связь</h2>
+            <p style="color:#7a7a7a; font-size:0.85em;">
+                Если у вас есть информация, не вошедшая в архив, вы можете оставить сообщение.
+                Канал не хранит метаданные.
+            </p>
+            <div class="contact-form">
+                <textarea id="msgInput" placeholder="Сообщение..."></textarea>
+                <button id="sendBtn">ОТПРАВИТЬ</button>
+                <div id="sendStatus"></div>
+            </div>
+            <div class="qr-block">
+                <div class="qr-placeholder">[ QR ]</div>
+                <p>Доступ к полному архиву через защищённое соединение</p>
+                <p style="font-size:0.7em; color:#444;">Ссылка действительна ограниченное время</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Архив ТКР · Независимое расследование</p>
+        <p style="font-size:0.65em; color:#333;">Данные получены из источников, не подлежащих верификации</p>
+        <div class="legal-note">
+            <strong>Внимание:</strong> Все персонажи, события, документы и обстоятельства, представленные на данном сайте, являются вымышленными и созданы в рамках художественного проекта. Любые совпадения с реальными людьми, организациями или фактами случайны. Информация не является официальной и не претендует на достоверность.
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const tabs = document.querySelectorAll('.tabs button');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabs.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            contents.forEach(c => c.classList.remove('active'));
+            const target = document.getElementById(this.dataset.tab);
+            if (target) target.classList.add('active');
+        });
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', function() {
+        const input = document.getElementById('msgInput');
+        const status = document.getElementById('sendStatus');
+        const btn = this;
+        if (input.value.trim().length < 1) {
+            status.style.display = 'block';
+            status.style.color = '#b34a4a';
+            status.textContent = '⚠ Сообщение не может быть пустым';
+            setTimeout(() => { status.style.display = 'none'; }, 2500);
+            return;
+        }
+        btn.disabled = true;
+        btn.textContent = 'ОТПРАВКА...';
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = 'ОТПРАВИТЬ';
+            status.style.display = 'block';
+            status.style.color = '#6a8a6a';
+            status.textContent = '✓ Сообщение передано в защищённый канал';
+            input.value = '';
+            setTimeout(() => { status.style.display = 'none'; }, 3000);
+        }, 1500);
+    });
+</script>
+
+</body>
+</html>
